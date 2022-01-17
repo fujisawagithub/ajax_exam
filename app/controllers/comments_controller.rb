@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
+  before_action :set_blog, only: [:create, :edit, :update]
   def create
-    @blog = Blog.find(params[:blog_id])
     @comment = @blog.comments.build(comment_params)
     respond_to do |format|
       if @comment.save
@@ -40,5 +40,8 @@ class CommentsController < ApplicationController
   private
   def comment_params
     params.require(:comment).permit(:blog_id, :content)
+  end
+  def set_blog
+    @blog = Blog.find(params[:blog_id])
   end
 end
